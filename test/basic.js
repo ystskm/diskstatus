@@ -15,7 +15,7 @@ module.exports = ci.testCase({
         let max = r[dev];
         if(max == NULL) {
           Object.values(r).forEach(s=>{
-            if(parseFloat(s.ratio) != 0 && parseFloat(s.ratio) != 100) dev = s, max = s;
+            if(parseFloat(s.ratio) != 0 && parseFloat(s.ratio) != 100) dev = s.filesystem, max = s;
           });
         }
         t.ok(max != NULL);
@@ -47,7 +47,7 @@ module.exports = ci.testCase({
         let max = r[dev];
         if(max == NULL) {
           Object.values(r).forEach(s=>{
-            if(parseFloat(s.ratio) != 0 && parseFloat(s.ratio) != 100) dev = s, max = s;
+            if(parseFloat(s.ratio) != 0 && parseFloat(s.ratio) != 100) dev = s.filesystem, max = s;
           });
         }
         t.ok(max != NULL);
