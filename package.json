@@ -1,0 +1,31 @@
+{
+  "name": "@ystskm/diskstatus",
+  "version": "0.0.1",
+  "explain": "",
+  "author": {
+    "name": "Yoshitaka Sakamoto",
+    "url": "http://github.com/ystskm",
+    "email": "sakamoto@startup-cloud.co.jp"
+  },
+  "contributors": [ ],
+  "description": "Simple diskstatus reader via command line",
+  "dependencies": {
+    "supertimer": "*"
+  },
+  "devDependencies": {
+    "foonyah-ci": "*"
+  },
+  "keywords": ["util","disk", "management", "automation"],
+  "main": "./index.js",
+  "repository": {
+    "url": "http://github.com/ystskm/diskstatus",
+    "type": "git"
+  },
+  "licenses": [{
+      "type": "MIT",
+      "url": "https://github.com/ystskm/diskstatus/blob/master/LICENSE"
+  }],
+  "scripts": {
+    "test": "node test/_runner.js"
+  }
+}
