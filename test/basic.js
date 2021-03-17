@@ -6,7 +6,7 @@ const ds = require('../index');
 module.exports = ci.testCase({
   'current': function(t) {
 
-    const dev = os.platform() == 'darwin' ? '/dev/disk1s2': '/dev/xvda1';
+    let dev = os.platform() == 'darwin' ? '/dev/disk1s2': '/dev/xvda1';
     const dir = '.';
     Promise.resolve().then(()=>{
       
@@ -38,7 +38,7 @@ module.exports = ci.testCase({
   },
   'home': function(t) {
 
-    const dev = os.platform() == 'darwin' ? '/dev/disk1s2': '/dev/xvda1';
+    let dev = os.platform() == 'darwin' ? '/dev/disk1s2': '/dev/xvda1';
     const dir = os.platform() == 'darwin' ? '/Users/ystk_skm/Downloads': '/home';
     Promise.resolve().then(()=>{
       
