@@ -33,8 +33,6 @@ module.exports = ci.testCase({
       
     }).then(()=>{
       t.done();
-    })['catch'](e=>{
-      t.fail(e);
     });
 
   },
@@ -67,8 +65,6 @@ module.exports = ci.testCase({
       
     }).then(()=>{
       t.done();
-    })['catch'](e=>{
-      t.fail(e);
     });
 
   }
