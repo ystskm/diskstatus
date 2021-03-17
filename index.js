@@ -10,7 +10,7 @@
   const NULL = null, TRUE = true, FALSE = false, UNDEF = undefined;
   const os = require('os'), fs = require('fs'), cp = require('child_process');
   const staticFncs = {
-    checkPart, checkDirc
+    checkPart, checkDirc, likely
   };
   Object.keys( staticFncs ).forEach(function(k) {
     DiskStatus[ k ] = staticFncs[ k ];
@@ -144,6 +144,17 @@
     function forWin() {
       return Promise.reject('[checkDirc] Not supported platform ' + p + ' yet');
     }
+  }
+  
+  /**
+   * 
+   */
+  function likely(r) {
+    let max;
+    Object.values(r || { }).forEach(s=>{
+      if(parseFloat(s.ratio) != 0 && parseFloat(s.ratio) != 100) max = s;
+    });
+    return max;
   }
   
   // ----- //

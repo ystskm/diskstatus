@@ -12,14 +12,9 @@ module.exports = ci.testCase({
       
       return ds.checkPart().then(r=>{
         t.ok(!!r);
-        let max = r[dev];
-        if(max == NULL) {
-          Object.values(r).forEach(s=>{
-            if(parseFloat(s.ratio) != 0 && parseFloat(s.ratio) != 100) dev = s.filesystem, max = s;
-          });
-        }
+        let max = r[dev] || ds.likely(r);
         t.ok(max != NULL);
-        t.equal(typeof max.size, 'number', dev + ': ' + max.ratio + ' is used.');
+        t.equal(typeof max.size, 'number', max.filesystem + ': ' + max.ratio + ' is used.');
         return max.size;
       });
       
@@ -44,14 +39,9 @@ module.exports = ci.testCase({
       
       return ds.checkPart().then(r=>{
         t.ok(!!r);
-        let max = r[dev];
-        if(max == NULL) {
-          Object.values(r).forEach(s=>{
-            if(parseFloat(s.ratio) != 0 && parseFloat(s.ratio) != 100) dev = s.filesystem, max = s;
-          });
-        }
+        let max = r[dev] || ds.likely(r);
         t.ok(max != NULL);
-        t.equal(typeof max.size, 'number', dev + ': ' + max.ratio + ' is used.');
+        t.equal(typeof max.size, 'number', max.filesystem + ': ' + max.ratio + ' is used.');
         return max.size;
       });
       
