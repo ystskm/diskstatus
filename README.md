@@ -1,8 +1,8 @@
 # diskstatus
 
-[![Rank](https://nodei.co/npm/@ystskm/discstatus.png?downloads=true&amp;downloadRank=true&amp;stars=true)](https://nodei.co/npm/@ystskm/discstatus/)  
+[![Rank](https://nodei.co/npm/discstatus.png?downloads=true&amp;downloadRank=true&amp;stars=true)](https://nodei.co/npm/discstatus/)  
 
-[![Version](https://badge.fury.io/js/@ystskm/discstatus.png)](https://npmjs.org/package/@ystskm/discstatus)
+[![Version](https://badge.fury.io/js/discstatus.png)](https://npmjs.org/package/discstatus)
 [![Build status](https://travis-ci.org/ystskm/discstatus.png)](https://travis-ci.org/ystskm/discstatus)  
   
 Wrapper for Simple DiscStatus Detector.
@@ -11,7 +11,7 @@ Wrapper for Simple DiscStatus Detector.
 
 Install with [npm](http://npmjs.org/):
 
-    npm install @ystskm/discstatus
+    npm install discstatus
     
 ## USAGE - Set functions by args
 
