@@ -17,12 +17,12 @@ Install with [npm](http://npmjs.org/):
 
 ```js
     // To begin discstatus, simply call API.
-    require('@ystskm/diskstatus').checkPart();
+    require('diskstatus').checkPart();
 ```
 
 ```js
     // Available for specify multiple files
-    require('@ystskm/diskstatus').checkDirc();
+    require('diskstatus').checkDirc();
 ```
 
 ## OPTIONS
