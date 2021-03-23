@@ -152,25 +152,26 @@
   }
   
   /**
-   * 
+   * Get maximum used volume status
    */
   function likely(r) {
     let max;
     Object.values(r || { }).forEach(s=>{
-      if(parseFloat(s.ratio) != 0 && parseFloat(s.ratio) != 100) max = s;
+      if(parseFloat(s.ratio) != 0 && parseFloat(s.ratio) != 100) 
+        max = max == NULL ? s: parseFloat(s.ratio) <= parseFloat(max.ratio) ? max: s;
     });
     return max;
   }
   
   /**
-   * 
+   * Get ratio from numerator and denominator
    */
   function ratio(n, denomi) {
     return parseInt(n / denomi * 10000) / 100;
   }
   
   /**
-   * 
+   * Get numerator from ratio and denominator
    */
   function real(r, denomi) {
     return parseInt(parseFloat(r) / 100 * denomi);
