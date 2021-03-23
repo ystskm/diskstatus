@@ -56,19 +56,21 @@
       let rd = { };
       return Promise.resolve().then(()=>{
         return new Promise((rsl, rej)=>{
-          const issue = [cmd, '| awk \'{ print $1,$2,$3 }\''].join(' ');
+          const issue = [cmd, '| awk \'{ print $1,$2,$3,$4 }\''].join(' ');
           // outLog('cmd:', issue);
           cp.exec(issue, (e, d)=>e ? rej(e): rsl( String(d).split(os.EOL) ));
         }).then(d=>{
           let header;
           d.forEach((t, i)=>{
-            if(i === 0) return header = t.split(/\s/).map(t=>t.toLowerCase());
+            if(i === 0) return header = t.split(/\s/).map(t=>t.toLowerCase()); // Prerequisites includes: [ filesystem, size, used, avail ]
             const values = t.split(/\s/).map(u2i);
             const rp = values[0];
             if(values.length != header.length || opts.except( rp )) return; // => ignore
             const one = rd[rp] = { };
             header.forEach((h, i)=>one[h] = values[i]);
-            if(one.size != NULL && one.used != NULL) { one.ratio = parseInt(one.used / one.size * 10000) / 100 + '%'; }
+            if(one.avail != NULL && one.used != NULL) { 
+              one.ratio = parseInt(one.used / one.avail * 10000) / 100 + '%';
+            }
           });
         });
       }).then(()=>{
@@ -125,14 +127,16 @@
           // outLog('cmd:', issue);
           cp.exec(issue, (e, d)=>e ? rej(e): rsl( String(d).split(os.EOL) ));
         }).then(d=>{
-          let header = ['used', 'filepath'];
+          let header = ['used', 'filepath']; // Prerequisites column: 'used' and 'filepath'
           d.forEach((t, i)=>{
             const values = t.split(/\s/).map(u2i);
             const rp = (pos == '/' ? '': pos) + String(values[1] || '').substr(1);
             if(values.length != header.length || opts.except( rp )) return; // => ignore
             const one = rd[rp] = { };
             header.forEach((h, i)=>one[h] = values[i]);
-            if(max != NULL && one.used != NULL) { one.ratio = parseInt(one.used / max * 10000) / 100 + '%'; }
+            if(max != NULL && one.used != NULL) { 
+              one.ratio = parseInt(one.used / max * 10000) / 100 + '%';
+            }
           });
         });
       }).then(()=>{

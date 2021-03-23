@@ -14,8 +14,9 @@ module.exports = ci.testCase({
         t.ok(!!r);
         let max = r[dev] || ds.likely(r);
         t.ok(max != NULL);
-        t.equal(typeof max.size, 'number', max.filesystem + ': ' + max.ratio + ' is used.');
-        return max.size;
+        t.equal(typeof max.size, 'number');
+        t.equal(typeof max.avail, 'number', max.filesystem + ': ' + max.ratio + ' is used.');
+        return max.avail;
       });
       
     }).then(max=>{
@@ -41,8 +42,9 @@ module.exports = ci.testCase({
         t.ok(!!r);
         let max = r[dev] || ds.likely(r);
         t.ok(max != NULL);
-        t.equal(typeof max.size, 'number', max.filesystem + ': ' + max.ratio + ' is used.');
-        return max.size;
+        t.equal(typeof max.size, 'number');
+        t.equal(typeof max.avail, 'number', max.filesystem + ': ' + max.ratio + ' is used.');
+        return max.avail;
       });
       
     }).then(max=>{
