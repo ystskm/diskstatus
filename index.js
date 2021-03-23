@@ -10,7 +10,7 @@
   const NULL = null, TRUE = true, FALSE = false, UNDEF = undefined;
   const os = require('os'), fs = require('fs'), cp = require('child_process');
   const staticFncs = {
-    checkPart, checkDirc, likely
+    checkPart, checkDirc, likely, ratio, real
   };
   Object.keys( staticFncs ).forEach(function(k) {
     DiskStatus[ k ] = staticFncs[ k ];
@@ -69,7 +69,7 @@
             const one = rd[rp] = { };
             header.forEach((h, i)=>one[h] = values[i]);
             if(one.avail != NULL && one.used != NULL) { 
-              one.ratio = parseInt(one.used / one.avail * 10000) / 100 + '%';
+              one.ratio = ratio(one.used, one.avail) + '%';
             }
           });
         });
@@ -135,7 +135,7 @@
             const one = rd[rp] = { };
             header.forEach((h, i)=>one[h] = values[i]);
             if(max != NULL && one.used != NULL) { 
-              one.ratio = parseInt(one.used / max * 10000) / 100 + '%';
+              one.ratio = ratio(one.used, max) + '%';
             }
           });
         });
@@ -159,6 +159,20 @@
       if(parseFloat(s.ratio) != 0 && parseFloat(s.ratio) != 100) max = s;
     });
     return max;
+  }
+  
+  /**
+   * 
+   */
+  function ratio(n, denomi) {
+    return parseInt(n / denomi * 10000) / 100;
+  }
+  
+  /**
+   * 
+   */
+  function real(r, denomi) {
+    return parseInt(parseFloat(r) * 100 * denomi);
   }
   
   // ----- //
