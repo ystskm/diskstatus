@@ -69,7 +69,8 @@
             const one = rd[rp] = { };
             header.forEach((h, i)=>one[h] = values[i]);
             if(one.avail != NULL && one.used != NULL) { 
-              one.ratio = ratio(one.used, one.avail) + '%';
+              one.size = one.avail + one.used;
+              one.ratio = ratio(one.used, one.size) + '%';
             }
           });
         });
@@ -172,7 +173,7 @@
    * 
    */
   function real(r, denomi) {
-    return parseInt(parseFloat(r) * 100 * denomi);
+    return parseInt(parseFloat(r) / 100 * denomi);
   }
   
   // ----- //
