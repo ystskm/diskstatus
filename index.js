@@ -5,15 +5,13 @@
  *   DiskStatus.checkDirc( [path, [options]] )
  * コマンドラインを通じた使用量等の把握
  */
-(function() {
+(g=>{
 
   const NULL = null, TRUE = true, FALSE = false, UNDEF = undefined;
   const os = require('os'), fs = require('fs'), cp = require('child_process');
-  const staticFncs = {
+  // staticFncs
+  Object.assign(DiskStatus, {
     checkPart, checkDirc, likely, ratio, real
-  };
-  Object.keys( staticFncs ).forEach(function(k) {
-    DiskStatus[ k ] = staticFncs[ k ];
   });
   
   module.exports = DiskStatus;
@@ -32,25 +30,27 @@
    * @param @optional <Object> options
    * @returns
    */
-  function checkPart(options) {
+  async function checkPart(options) {
     // os = require('os'), cp = require('child_process');
     const p = os.platform();
     let opts = Object.assign({ except: disk=>{ return !disk || disk.indexOf('/dev/') != 0 || disk.indexOf('/dev/loop') == 0 } }, options);
     let cmd;
-    switch(TRUE) {
-
-    // 'aix', 'darwin', 'freebsd', 'linux', 'openbsd', 'sunos', and 'win32'
-    case p == 'win32':
-      cmd;
-      return forWin();
-
-    case p == 'darwin':
-    case p == 'linux':
-    default:
-      cmd = 'df -h';
-      return forLinux();
-
-    }
+    return Promise.resolve().then(()=>{
+      switch(TRUE) {
+  
+      // 'aix', 'darwin', 'freebsd', 'linux', 'openbsd', 'sunos', and 'win32'
+      case p == 'win32':
+        cmd;
+        return forWin();
+  
+      case p == 'darwin':
+      case p == 'linux':
+      default:
+        cmd = 'df -h';
+        return forLinux();
+  
+      }
+    });
     function forLinux() {
 
       let rd = { };
@@ -92,32 +92,43 @@
    * @param @optional <Object> options
    * @returns
    */
-  function checkDirc(position, maximum, options) {
+  async function checkDirc(position, maximum, options) {
     // os = require('os'), cp = require('child_process');
     const p = os.platform();
     let pos = position || '/';
     let max = maximum  || Math.pow(10, 9);
     let opts = Object.assign({ except: rp=>{ return !rp } }, options);
     let cmd;
-    switch(TRUE) {
+    return Promise.resolve().then(()=>{
+      // countermeasure: Affected versions of this package are vulnerable to arbitrary command injection (CWE-77 [1]).
+      switch(TRUE) {
 
-    // 'aix', 'darwin', 'freebsd', 'linux', 'openbsd', 'sunos', and 'win32'
-    case p == 'win32':
-      pos = pos.replace(/\//g, '¥');
-      if(pos.charAt(1) != ':') { pos = 'c:' + pos; }
-      cmd;
-      return forWin();
+      case p == 'win32':
+        pos = pos.replace(/\//g, '¥');
+        if(pos.charAt(1) != ':') { pos = 'c:' + pos; }
+        break;
 
-    case p == 'darwin':
-      cmd = 'du -d 1 -h';
-      return forLinux();
-      
-    case p == 'linux':
-    default:
-      cmd = 'du -h --max-depth=1';
-      return forLinux();
-
-    }
+      }
+      return new Promise((rsl, rej)=>fs.access(pos, er=>er ? rej(er): rsl()));
+    }).then(()=>{
+      switch(TRUE) {
+  
+      // 'aix', 'darwin', 'freebsd', 'linux', 'openbsd', 'sunos', and 'win32'
+      case p == 'win32':
+        cmd;
+        return forWin();
+  
+      case p == 'darwin':
+        cmd = 'du -d 1 -h';
+        return forLinux();
+        
+      case p == 'linux':
+      default:
+        cmd = 'du -h --max-depth=1';
+        return forLinux();
+  
+      }
+    });
     function forLinux() {
 
       // os = require('os'), cp = require('child_process');
@@ -253,4 +264,4 @@
     return Array.isArray(x);
   }
 
-})();
+})(this);
