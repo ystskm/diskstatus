@@ -9,6 +9,10 @@
 
   const NULL = null, TRUE = true, FALSE = false, UNDEF = undefined;
   const os = require('os'), fs = require('fs'), cp = require('child_process');
+  // polyfill for Node v6.11.0
+  if(!Object.prototype.values) {
+    Object.prototype.values = obj=>Object.keys(obj).map(k=>obj[k]);
+  }
   // staticFncs
   Object.assign(DiskStatus, {
     checkPart, checkDirc, likely, ratio, real
@@ -22,7 +26,6 @@
    * @returns
    */
   function DiskStatus() {
-  
   }
 
   /**
@@ -30,7 +33,8 @@
    * @param @optional <Object> options
    * @returns
    */
-  async function checkPart(options) {
+   // !! IMPORTANT !! DON'T USE async keyword for Node-v6.11.0
+  function checkPart(options) {
     // os = require('os'), cp = require('child_process');
     const p = os.platform();
     let opts = Object.assign({ except: disk=>{ return !disk || disk.indexOf('/dev/') != 0 || disk.indexOf('/dev/loop') == 0 } }, options);
@@ -92,7 +96,8 @@
    * @param @optional <Object> options
    * @returns
    */
-  async function checkDirc(position, maximum, options) {
+    // !! IMPORTANT !! DON'T USE async keyword for Node-v6.11.0
+  function checkDirc(position, maximum, options) {
     // os = require('os'), cp = require('child_process');
     const p = os.platform();
     let pos = position || '/';

@@ -1,6 +1,6 @@
 {
   "name": "diskstatus",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "explain": "",
   "author": {
     "name": "Yoshitaka Sakamoto",
@@ -8,7 +8,7 @@
     "email": "sakamoto@startup-cloud.co.jp"
   },
   "contributors": [ ],
-  "description": "Simple diskstatus reader via command line. countermeasure for CWE-77, v0.2.0",
+  "description": "Simple diskstatus reader via command line. countermeasure for CWE-77, v0.2.0.",
   "dependencies": {
     "supertimer": "*"
   },
