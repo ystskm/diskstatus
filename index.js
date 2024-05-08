@@ -10,8 +10,8 @@
   const NULL = null, TRUE = true, FALSE = false, UNDEF = undefined;
   const os = require('os'), fs = require('fs'), cp = require('child_process');
   // polyfill for Node v6.11.0
-  if(!Object.prototype.values) {
-    Object.prototype.values = obj=>Object.keys(obj).map(k=>obj[k]);
+  if(!Object.values) {
+    Object.values = obj=>Object.keys(obj).map(k=>obj[k]);
   }
   // staticFncs
   Object.assign(DiskStatus, {
